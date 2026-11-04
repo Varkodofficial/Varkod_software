@@ -1,0 +1,190 @@
+/* ==========================================================================
+   loader.css — "Barcode scan" intro
+   Timeline (seconds):
+     0.0 – 1.4  barcode bars rise in, laser scan sweeps across
+     1.8 – 2.4  bars fade out, VARKOD mark materialises from blur
+     2.4 – 3.0  tagline lifts in, progress bar fills
+     3.0 – 4.0  top + bottom panels split apart to reveal the site
+   ========================================================================== */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+}
+
+.loader__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: var(--green);
+  transition: transform 1s var(--ease-in-out);
+}
+
+.loader__panel--top {
+  top: 0;
+}
+
+.loader__panel--bottom {
+  bottom: 0;
+}
+
+.loader.is-exiting .loader__panel--top {
+  transform: translateY(-100%);
+}
+
+.loader.is-exiting .loader__panel--bottom {
+  transform: translateY(100%);
+}
+
+.loader__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s var(--ease-out);
+}
+
+.loader.is-exiting .loader__content {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+/* Stage: bars, scan line and logo share the same box */
+.loader__stage {
+  position: relative;
+  width: min(260px, 62vw);
+  aspect-ratio: 602 / 396;
+}
+
+/* Barcode bars */
+.loader__bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: barsOut 0.6s var(--ease-in-out) 1.8s both;
+}
+
+.loader__bar {
+  width: 3px;
+  height: var(--h);
+  border-radius: 2px;
+  background: var(--cream);
+  transform-origin: center;
+  animation: barIn 0.8s var(--ease-out) both;
+  animation-delay: var(--d);
+}
+
+@keyframes barIn {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes barsOut {
+  to {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+/* Laser scan line */
+.loader__scan {
+  position: absolute;
+  top: -10%;
+  bottom: -10%;
+  width: 2px;
+  background: var(--cream);
+  box-shadow:
+    0 0 14px 3px rgba(221, 220, 215, 0.55),
+    0 0 40px 8px rgba(221, 220, 215, 0.2);
+  opacity: 0;
+  animation: scan 1.4s var(--ease-in-out) 0.5s 1 both;
+}
+
+@keyframes scan {
+  0% {
+    left: -4%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    left: 104%;
+    opacity: 0;
+  }
+}
+
+/* Logo mark */
+.loader__logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  filter: blur(14px);
+  transform: scale(1.06);
+  animation: logoIn 1.2s var(--ease-out) 1.8s forwards;
+}
+
+@keyframes logoIn {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+/* Tagline */
+.loader__tag {
+  padding-left: 0.5em; /* balances the trailing letter-spacing */
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--cream-80);
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease-out) 2.4s forwards;
+}
+
+/* Progress line */
+.loader__progress {
+  position: relative;
+  width: min(240px, 60vw);
+  height: 2px;
+  overflow: hidden;
+  background: var(--cream-line);
+}
+
+.loader__progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: progress 3s var(--ease-in-out) forwards;
+}
+
+@keyframes progress {
+  to {
+    transform: scaleX(1);
+  }
+}

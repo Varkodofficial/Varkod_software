@@ -1,0 +1,133 @@
+/* ---------- Service cards: restyle only, layout stays as in services.css ---------- */
+
+.svc-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 22px;
+  background: linear-gradient(160deg, #36502a 0%, #2a3b19 100%);
+  border: 1px solid rgba(232, 228, 216, 0.14);
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease,
+    box-shadow 0.5s ease,
+    background 0.6s ease;
+}
+
+/* Hide any cut-line decoration from services.css so the new top bar is the only accent */
+.svc-card::after {
+  display: none !important;
+}
+
+/* Lime top bar that draws across on hover */
+.svc-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: #c7e35c;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+}
+
+.svc-card:hover {
+  transform: translateY(-8px);
+  border-color: #c7e35c;
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.55);
+}
+
+.svc-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Titles change color on hover (dark cards) */
+.svc-card h3 {
+  transition: color 0.4s ease;
+}
+.svc-card:hover h3 {
+  color: #c7e35c;
+}
+
+/* ---------- Feature chips: list items become pills ---------- */
+.svc-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.svc-card li {
+  padding: 8px 14px;
+  border: 1px solid rgba(232, 228, 216, 0.22);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+.svc-card li::before {
+  display: none;
+}
+.svc-card:hover li {
+  border-color: rgba(199, 227, 92, 0.55);
+}
+.svc-card li:hover {
+  background: #c7e35c;
+  color: #16210c;
+  border-color: #c7e35c;
+}
+
+/* ---------- Cream variant: every second and fifth card ---------- */
+.svc-card:nth-child(3n + 2) {
+  background: #e8e4d8;
+  color: #1c2a12;
+  border-color: #1c2a12;
+}
+
+/* Force every heading, text block and chip to dark green on cream.
+   !important is needed because the site's global heading color would otherwise win. */
+.svc-card:nth-child(3n + 2) h1,
+.svc-card:nth-child(3n + 2) h2,
+.svc-card:nth-child(3n + 2) h3,
+.svc-card:nth-child(3n + 2) h4,
+.svc-card:nth-child(3n + 2) h5,
+.svc-card:nth-child(3n + 2) h6,
+.svc-card:nth-child(3n + 2) p,
+.svc-card:nth-child(3n + 2) span,
+.svc-card:nth-child(3n + 2) strong,
+.svc-card:nth-child(3n + 2) li {
+  color: #1c2a12 !important;
+}
+
+/* The big card number: outlined instead of solid, so it stays readable on cream */
+.svc-card:nth-child(3n + 2) > :first-child {
+  color: transparent !important;
+  -webkit-text-stroke: 1.2px #1c2a12;
+}
+
+.svc-card:nth-child(3n + 2) li {
+  border-color: rgba(28, 42, 18, 0.35);
+}
+.svc-card:nth-child(3n + 2):hover {
+  border-color: #1c2a12;
+  box-shadow: 0 30px 60px -28px rgba(28, 42, 18, 0.45);
+}
+.svc-card:nth-child(3n + 2):hover li {
+  border-color: #1c2a12;
+}
+.svc-card:nth-child(3n + 2) li:hover {
+  background: #1c2a12;
+  color: #c7e35c !important;
+  border-color: #1c2a12;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 560px) {
+  .svc-card:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,286 @@
+/* ==========================================================================
+   home-cards.css: services (2x2 equal cards) and why-cards.
+   All service cards are the same size. Titles and text line up.
+   ========================================================================== */
+
+/* Cursor spotlight, used by any element with the .spot class */
+.spot {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(221, 220, 215, 0.16),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.spot:hover::before {
+  opacity: 1;
+}
+
+/* ---------- Services: equal 2x2 grid ---------- */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Every card is the same width and height, whatever its size class */
+.bento__card,
+.bento__card--wide,
+.bento__card--narrow {
+  grid-column: span 1;
+}
+
+.bento__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 340px;
+  padding: clamp(28px, 3vw, 40px);
+  background: linear-gradient(160deg, #22301a 0%, #1b2610 100%);
+  border: 1px solid rgba(221, 220, 215, 0.14);
+  color: #dddcd7;
+  overflow: hidden;
+  transition: transform 0.6s var(--ease-out), border-color 0.4s ease, box-shadow 0.6s var(--ease-out);
+}
+
+/* Cream line that draws across the top on hover */
+.bento__card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: #dddcd7;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.bento__card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(221, 220, 215, 0.5);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
+.bento__card:hover::after {
+  transform: scaleX(1);
+}
+
+.bento__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.bento__index {
+  font-family: var(--font-display);
+  font-size: 3.6rem;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgba(221, 220, 215, 0.6);
+}
+
+.bento__arrow {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(221, 220, 215, 0.4);
+  transition: transform 0.5s var(--ease-out), background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+.bento__arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bento__card:hover .bento__arrow {
+  transform: rotate(45deg);
+  background: #dddcd7;
+  border-color: #dddcd7;
+  color: #1b2610;
+}
+
+/* Title sits at the bottom of the card */
+.bento__title {
+  margin-top: auto;
+  padding-top: 32px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 2.7rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Text always reserves three lines, so titles line up across cards */
+.bento__text {
+  margin-top: 14px;
+  min-height: calc(1.65em * 3);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: rgba(221, 220, 215, 0.78);
+}
+
+.bento__tags {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bento__tags li {
+  padding: 6px 12px;
+  border: 1px solid rgba(221, 220, 215, 0.3);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+.bento__card:hover .bento__tags li {
+  border-color: rgba(221, 220, 215, 0.6);
+}
+
+/* ---------- Why-VARKOD cards: three styles, chosen by theme class ---------- */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.pillar-card {
+  position: relative;
+  padding: clamp(28px, 3vw, 40px);
+  transition: transform 0.5s var(--ease-out), border-color 0.4s ease;
+}
+
+.pillar-card:hover {
+  transform: translateY(-8px);
+}
+
+.pillar-card__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  line-height: 1;
+  opacity: 0.4;
+}
+
+.pillar-card__title {
+  margin-top: 26px;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.pillar-card__text {
+  margin-top: 14px;
+  font-size: 0.97rem;
+  line-height: 1.65;
+  opacity: 0.85;
+}
+
+.pillar-card__bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.pillar-card:hover .pillar-card__bar {
+  transform: scaleX(1);
+}
+
+/* Cream card: dark green text on a light background.
+   !important is needed because the global heading colour would otherwise win. */
+.pillar-card--cream {
+  background: #dddcd7;
+  border: 1px solid #2a3b19;
+}
+.pillar-card--cream,
+.pillar-card--cream * {
+  color: #2a3b19 !important;
+  -webkit-text-fill-color: #2a3b19 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.pillar-card--cream .pillar-card__num {
+  opacity: 0.6 !important;
+}
+.pillar-card--cream .pillar-card__title {
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+}
+
+/* Dark card: cream text on deep green with a thin border */
+.pillar-card--dark {
+  background: #1f2c12;
+  border: 1px solid rgba(221, 220, 215, 0.14);
+}
+.pillar-card--dark,
+.pillar-card--dark * {
+  color: #dddcd7 !important;
+}
+.pillar-card--dark:hover {
+  border-color: #c7e35c;
+}
+
+/* Outline card: transparent with a dashed frame and a solid number */
+.pillar-card--outline {
+  background: transparent;
+  border: 1px dashed rgba(221, 220, 215, 0.4);
+}
+.pillar-card--outline,
+.pillar-card--outline * {
+  color: #dddcd7 !important;
+}
+.pillar-card--outline .pillar-card__num {
+  opacity: 1;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .pillar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .bento {
+    grid-template-columns: 1fr;
+  }
+
+  .bento__card {
+    min-height: 0;
+  }
+
+  .bento__text {
+    min-height: 0;
+  }
+}

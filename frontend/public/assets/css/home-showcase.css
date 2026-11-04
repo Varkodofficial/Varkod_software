@@ -1,0 +1,261 @@
+/* ==========================================================================
+   home-showcase.css: case-study cards in an equal 4-column grid.
+   Every card has the same width and height. Hover lifts the card, tilts the
+   window mockup and opens the description.
+   ========================================================================== */
+
+.showcase {
+  padding: clamp(72px, 10vw, 120px) 0;
+}
+
+.showcase__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 44px;
+}
+
+.showcase__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(221, 220, 215, 0.4);
+  color: #dddcd7;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: border-color 0.3s ease;
+}
+
+.showcase__all:hover {
+  border-color: #dddcd7;
+}
+
+.showcase__all span {
+  display: inline-block;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.showcase__all:hover span {
+  transform: translateX(6px);
+}
+
+/* Equal 4-column grid. Each card stretches to the same height. */
+.showcase__track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* ---------- Card shell ---------- */
+.showcase__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: #1b2610;
+  border: 1px solid rgba(221, 220, 215, 0.16);
+  color: #dddcd7;
+  transition: transform 0.6s var(--ease-out), border-color 0.4s ease, box-shadow 0.6s var(--ease-out);
+}
+
+.showcase__card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(221, 220, 215, 0.6);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Visual area with a browser-window mockup ---------- */
+.showcase__visual {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+}
+
+/* The window itself */
+.showcase__visual::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 76%;
+  height: 64%;
+  transform: translate(-50%, -50%);
+  border-radius: 12px;
+  box-shadow: 0 24px 50px -18px rgba(0, 0, 0, 0.55);
+  transition: transform 0.8s var(--ease-out);
+}
+
+.showcase__card:hover .showcase__visual::before {
+  transform: translate(-50%, -54%) rotate(-2deg);
+}
+
+/* Card 1: cream visual, dark window with a hero block */
+.showcase__visual--a {
+  background: #dddcd7;
+}
+
+.showcase__visual--a::before {
+  background:
+    radial-gradient(circle at 14px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 28px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 42px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    linear-gradient(#3d5526, #3d5526) 16px 44px / calc(100% - 32px) 64px no-repeat,
+    linear-gradient(rgba(221, 220, 215, 0.55), rgba(221, 220, 215, 0.55)) 16px 120px / 60% 8px no-repeat,
+    linear-gradient(rgba(221, 220, 215, 0.35), rgba(221, 220, 215, 0.35)) 16px 136px / 40% 8px no-repeat,
+    #1b2610;
+}
+
+/* Card 2: green visual, cream window with a sidebar and stat tiles */
+.showcase__visual--b {
+  background: #2a3b19;
+}
+
+.showcase__visual--b::before {
+  background:
+    linear-gradient(#2a3b19, #2a3b19) 0 32px / 26% calc(100% - 32px) no-repeat,
+    linear-gradient(#3d5526, #3d5526) 34% 44px / 30% 52px no-repeat,
+    linear-gradient(#3d5526, #3d5526) 68% 44px / 28% 52px no-repeat,
+    linear-gradient(#2a3b19, #2a3b19) 34% 112px / 60% 10px no-repeat,
+    linear-gradient(#2a3b19, #2a3b19) 34% 130px / 44% 10px no-repeat,
+    #dddcd7;
+}
+
+/* Card 3: mid green visual, dark window with table rows */
+.showcase__visual--c {
+  background: #3d5526;
+}
+
+.showcase__visual--c::before {
+  background:
+    radial-gradient(circle at 14px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 28px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 42px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    repeating-linear-gradient(180deg, rgba(221, 220, 215, 0.4) 0 8px, transparent 8px 22px) 16px 44px / calc(100% - 32px) 110px no-repeat,
+    #1b2610;
+}
+
+/* Card 4: cream visual, dark green window with an arch above it */
+.showcase__visual--d {
+  background: #dddcd7;
+}
+
+.showcase__visual--d::before {
+  background:
+    radial-gradient(circle at 14px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 28px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 42px 16px, rgba(221, 220, 215, 0.6) 0 3px, transparent 3.5px),
+    linear-gradient(rgba(221, 220, 215, 0.5), rgba(221, 220, 215, 0.5)) 16px 116px / 70% 8px no-repeat,
+    linear-gradient(rgba(221, 220, 215, 0.35), rgba(221, 220, 215, 0.35)) 16px 132px / 50% 8px no-repeat,
+    #2a3b19;
+}
+
+.showcase__visual--d::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  z-index: 2;
+  width: 110px;
+  height: 136px;
+  transform: translateX(-50%);
+  border-radius: 110px 110px 0 0;
+  background: #2a3b19;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.showcase__card:hover .showcase__visual--d::after {
+  transform: translateX(-50%) translateY(-10px);
+}
+
+/* Big initials at the top left. Colour changes with the visual. */
+.showcase__mark {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  z-index: 3;
+  font-family: var(--font-display);
+  font-size: 3.2rem;
+  line-height: 1;
+  color: #dddcd7;
+}
+
+.showcase__visual--a .showcase__mark,
+.showcase__visual--d .showcase__mark {
+  color: #2a3b19;
+}
+
+/* ---------- Text area ---------- */
+.showcase__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px 24px 26px;
+  border-top: 1px solid rgba(221, 220, 215, 0.14);
+}
+
+.showcase__type {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(221, 220, 215, 0.6);
+}
+
+/* Title reserves two lines, so every card's text lines up */
+.showcase__title {
+  margin-top: 10px;
+  min-height: 2em;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.4vw, 2rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Description reserves its space, and fades in on hover */
+.showcase__line {
+  margin-top: 12px;
+  min-height: calc(1.6em * 3);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(221, 220, 215, 0.85);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.6s var(--ease-out);
+}
+
+.showcase__card:hover .showcase__line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* The horizontal-scroll hint is not needed with a grid */
+.showcase__hint {
+  display: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .showcase__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .showcase__track {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase__title,
+  .showcase__line {
+    min-height: 0;
+  }
+}

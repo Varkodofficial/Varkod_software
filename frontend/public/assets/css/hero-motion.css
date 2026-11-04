@@ -1,0 +1,152 @@
+/* ==========================================================================
+   hero-motion.css: entrance and ambient motion for the Services and Projects heroes
+   ========================================================================== */
+
+/* ---------- Keyframes ---------- */
+@keyframes heroEyebrow {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-12px); }
+  to   { opacity: 1; clip-path: inset(0 0 0 0);    transform: none; }
+}
+
+@keyframes heroLine {
+  0%   { clip-path: inset(0 0 100% 0); transform: translateY(45%); }
+  100% { clip-path: inset(0 0 -12% 0); transform: none; }
+}
+
+@keyframes heroBlur {
+  from { opacity: 0; filter: blur(10px); transform: translateY(18px); }
+  to   { opacity: 1; filter: blur(0);    transform: none; }
+}
+
+@keyframes heroPop {
+  from { opacity: 0; transform: translateY(16px) scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes heroFill {
+  from { background-size: 0% 100%; }
+  to   { background-size: 100% 100%; }
+}
+
+@keyframes heroSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes heroGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(4%, 6%) scale(1.1); }
+}
+
+/* ---------- Shared hero base ---------- */
+.svc-hero,
+.pj-hero {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Soft lime glow that drifts behind the hero content */
+.svc-hero::before,
+.pj-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 620px;
+  height: 620px;
+  left: -180px;
+  top: -200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(199, 227, 92, 0.22) 0%, rgba(199, 227, 92, 0) 65%);
+  filter: blur(12px);
+  animation: heroGlow 14s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Slow rotating dashed ring on the Projects hero, matching the Services ring */
+.pj-hero::after {
+  content: '';
+  position: absolute;
+  right: -10%;
+  top: -20%;
+  width: min(48vw, 680px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px dashed rgba(221, 220, 215, 0.2);
+  animation: heroSpin 60s linear infinite;
+  pointer-events: none;
+}
+
+/* ---------- Text entrance ---------- */
+.svc-hero .eyebrow,
+.pj-hero .eyebrow {
+  animation: heroEyebrow 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+.svc-hero__title,
+.pj-hero__title {
+  animation: heroLine 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+.svc-hero__text,
+.pj-hero__text {
+  animation: heroBlur 1s ease 0.7s both;
+}
+
+/* Services: the outlined words fill with lime from left to right */
+.svc-hero__title em {
+  background-image: linear-gradient(90deg, #c7e35c, #c7e35c);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroFill 1.6s cubic-bezier(0.65, 0, 0.35, 1) 1.1s forwards;
+}
+
+/* ---------- Buttons and tabs: staggered pop-in ---------- */
+.svc-hero__actions {
+  animation: heroBlur 0.9s ease 0.9s both;
+}
+
+.svc-hero__actions .btn,
+.pj-tabs .pj-tab {
+  animation: heroPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.svc-hero__actions .btn:nth-child(2) {
+  animation-delay: 1.05s;
+}
+.pj-tabs .pj-tab:nth-child(1) { animation-delay: 0.9s; }
+.pj-tabs .pj-tab:nth-child(2) { animation-delay: 1.0s; }
+.pj-tabs .pj-tab:nth-child(3) { animation-delay: 1.1s; }
+
+/* Light sweep across hero buttons on hover */
+.svc-hero__actions .btn {
+  position: relative;
+  overflow: hidden;
+}
+.svc-hero__actions .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.svc-hero__actions .btn:hover::before {
+  left: 130%;
+}
+
+/* ---------- Reduced motion: switch the hero animations off ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .svc-hero *,
+  .pj-hero *,
+  .svc-hero::before,
+  .pj-hero::before,
+  .pj-hero::after,
+  .pj-tabs .pj-tab {
+    animation: none !important;
+  }
+}

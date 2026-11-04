@@ -1,0 +1,72 @@
+/* ---------- Static vs dynamic panels: original colours, visible text, hover effect ---------- */
+
+.svc-side {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 22px;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s ease,
+    border-color 0.4s ease;
+}
+
+/* Lime top bar that draws across on hover */
+.svc-side::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: #c7e35c;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+}
+
+.svc-side:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.55);
+}
+.svc-side:hover::before {
+  transform: scaleX(1);
+}
+
+/* ---------- Left panel: cream (static) ---------- */
+.svc-side:not(.svc-side--dark) {
+  background: #dddcd7;
+  color: #2a3b19;
+}
+.svc-side:not(.svc-side--dark) * {
+  color: #2a3b19;
+}
+.svc-side:not(.svc-side--dark):hover {
+  box-shadow: 0 30px 60px -28px rgba(42, 59, 25, 0.45);
+}
+
+/* ---------- Right panel: dark green (dynamic) ---------- */
+.svc-side--dark {
+  background: #1b2610;
+  color: #dddcd7;
+  border: 1px solid rgba(221, 220, 215, 0.14);
+}
+.svc-side--dark * {
+  color: #dddcd7;
+}
+.svc-side--dark:hover {
+  border-color: #c7e35c;
+}
+
+/* Keep the label's softer look on both panels */
+.svc-side__label {
+  opacity: 0.7;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 760px) {
+  .svc-side:hover {
+    transform: none;
+  }
+}

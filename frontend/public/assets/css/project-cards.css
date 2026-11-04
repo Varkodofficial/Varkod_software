@@ -1,0 +1,319 @@
+/* ---------- Layout helpers ---------- */
+.pj-slot {
+  display: flex;
+}
+.pj-slot > .pc-card {
+  flex: 1;
+}
+
+/* ---------- Shared card ---------- */
+.pc-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
+  border-radius: 24px;
+  overflow: hidden;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s ease,
+    background-color 0.6s ease,
+    color 0.6s ease;
+}
+.pc-card:hover {
+  transform: translateY(-8px);
+}
+
+.pc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 26px 0;
+}
+.pc-chip {
+  font: 700 11px/1 var(--font-body, system-ui);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 9px 14px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+.pc-num {
+  font: 400 1.6rem/1 var(--font-display, sans-serif);
+  opacity: 0.5;
+}
+
+.pc-mark {
+  font-family: var(--font-display, sans-serif);
+  font-size: clamp(5rem, 9vw, 7.5rem);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  padding: 18px 26px 0;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), color 0.5s ease;
+}
+.pc-card:hover .pc-mark {
+  transform: translateX(10px);
+}
+
+.pc-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px 26px 26px;
+}
+.pc-title {
+  color: inherit;
+  font: 400 1.9rem/1.05 var(--font-display, sans-serif);
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+}
+.pc-client {
+  color: inherit;
+  font: 700 11px/1.4 var(--font-body, system-ui);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 0 0 14px;
+}
+.pc-summary {
+  color: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin: 0;
+  min-height: calc(1.6em * 3);
+}
+
+/* Expandable details */
+.pc-more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pc-card.is-open .pc-more {
+  grid-template-rows: 1fr;
+}
+.pc-more__inner {
+  overflow: hidden;
+}
+.pc-label {
+  font: 700 11px/1 var(--font-body, system-ui);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin: 20px 0 12px;
+  opacity: 0.6;
+}
+.pc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: grid;
+  gap: 8px;
+}
+.pc-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.pc-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 10px;
+  height: 2px;
+  background: currentColor;
+}
+.pc-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pc-tags li {
+  font: 700 11px/1 var(--font-body, system-ui);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 10px;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+}
+
+/* Toggle button */
+.pc-toggle {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0 0;
+  border: 0;
+  border-top: 1px solid currentColor;
+  background: none;
+  color: inherit;
+  font: 800 13px/1 var(--font-body, system-ui);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+  opacity: 0.9;
+}
+.pc-toggle span {
+  font-size: 18px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pc-card:hover .pc-toggle span {
+  transform: translateX(6px);
+}
+.pc-card.is-open .pc-toggle span {
+  transform: rotate(90deg);
+}
+.pc-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ---------- Theme 1: Paper ---------- */
+.pc-card--paper {
+  background: #e8e4d8;
+  color: #1c2a12;
+  border: 1px solid #1c2a12;
+}
+.pc-card--paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #2a3b19;
+  transform: translateY(100%);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pc-card--paper:hover::before,
+.pc-card--paper.is-open::before {
+  transform: translateY(0);
+}
+.pc-card--paper:hover,
+.pc-card--paper.is-open {
+  color: #e8e4d8;
+}
+/* Force the title dark on the cream card, and cream when the green panel covers it */
+.pc-card--paper .pc-title {
+  color: #1c2a12 !important;
+}
+.pc-card--paper:hover .pc-title,
+.pc-card--paper.is-open .pc-title {
+  color: #e8e4d8 !important;
+}
+.pc-card--paper .pc-mark {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #1c2a12;
+}
+.pc-card--paper:hover .pc-mark,
+.pc-card--paper.is-open .pc-mark {
+  -webkit-text-stroke-color: #e8e4d8;
+}
+
+/* ---------- Theme 2: Forest ---------- */
+.pc-card--forest {
+  background-color: #1c2a12;
+  background-image: radial-gradient(rgba(232, 228, 216, 0.09) 1px, transparent 1px);
+  background-size: 18px 18px;
+  color: #e8e4d8;
+  box-shadow: inset 0 0 0 1px rgba(232, 228, 216, 0.12);
+}
+.pc-card--forest .pc-title {
+  color: #e8e4d8 !important;
+}
+.pc-card--forest .pc-chip {
+  color: #c7e35c;
+}
+.pc-card--forest .pc-mark {
+  color: #e8e4d8;
+}
+.pc-card--forest .pc-toggle {
+  border-top-color: rgba(232, 228, 216, 0.2);
+}
+.pc-card--forest:hover {
+  box-shadow:
+    inset 0 0 0 1px #c7e35c,
+    0 30px 60px -24px rgba(0, 0, 0, 0.6);
+}
+.pc-card--forest:hover .pc-mark {
+  color: #c7e35c;
+}
+
+/* ---------- Theme 3: Lime ---------- */
+.pc-card--lime {
+  background: #c7e35c;
+  color: #16210c;
+}
+.pc-card--lime .pc-title {
+  color: #16210c !important;
+}
+.pc-card--lime::after {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -110px;
+  top: -110px;
+  border-radius: 50%;
+  background: #16210c;
+  opacity: 0.12;
+  z-index: -1;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pc-card--lime:hover::after {
+  transform: scale(1.35);
+}
+.pc-card--lime .pc-mark {
+  font-size: clamp(6rem, 11vw, 9rem);
+}
+.pc-card--lime .pc-tags li {
+  background: #16210c;
+  color: #c7e35c;
+  border-color: #16210c;
+}
+.pc-card--lime:hover {
+  box-shadow: 0 30px 60px -28px rgba(22, 33, 12, 0.6);
+}
+
+/* ---------- Theme 4: Split ---------- */
+.pc-card--split {
+  background: #e8e4d8;
+  color: #1c2a12;
+  border: 1px solid #1c2a12;
+}
+.pc-card--split .pc-title {
+  color: #1c2a12 !important;
+}
+.pc-card--split .pc-mark {
+  color: #e8e4d8;
+  margin-top: 4px;
+  padding: 36px 26px 60px;
+  background: linear-gradient(135deg, #2a3b19 0%, #56773a 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 72%, 0 100%);
+  transition: clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pc-card--split:hover .pc-mark {
+  transform: none;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 86%);
+}
+.pc-card--split .pc-body {
+  padding-top: 26px;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 560px) {
+  .pc-card {
+    min-height: auto;
+  }
+  .pc-summary {
+    min-height: 0;
+  }
+}

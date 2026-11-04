@@ -1,0 +1,384 @@
+/* ==========================================================================
+   projects.css: Projects page, bento case-study cards with an expandable panel
+   ========================================================================== */
+
+@keyframes shapeFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-10px, 10px) rotate(6deg); }
+}
+
+/* ---------- Hero ---------- */
+.pj-hero {
+  padding: clamp(72px, 10vw, 128px) 0 clamp(40px, 5vw, 64px);
+}
+
+.pj-hero__title {
+  margin-top: 16px;
+  max-width: 980px;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 9vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #dddcd7;
+}
+
+.pj-hero__text {
+  margin-top: 24px;
+  max-width: 620px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(221, 220, 215, 0.8);
+}
+
+/* ---------- Filter pills ---------- */
+.pj-list {
+  padding-bottom: clamp(64px, 9vw, 110px);
+}
+
+.pj-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.pj-tab {
+  padding: 12px 22px;
+  border: 1px solid rgba(221, 220, 215, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: #dddcd7;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+
+.pj-tab:hover {
+  transform: translateY(-2px);
+  background: rgba(221, 220, 215, 0.1);
+}
+
+.pj-tab.is-active {
+  background: #dddcd7;
+  color: #2a3b19;
+  border-color: #dddcd7;
+}
+
+/* ---------- Bento grid ---------- */
+.pj-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.pj-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(221, 220, 215, 0.03);
+  border: 1px solid rgba(221, 220, 215, 0.14);
+  color: #dddcd7;
+  transition: transform 0.5s var(--ease-out), border-color 0.4s ease;
+}
+
+.pj-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(221, 220, 215, 0.45);
+}
+
+/* The first card is a wide feature when showing all work */
+.pj-card--featured {
+  grid-column: span 2;
+  background: #dddcd7;
+  color: #2a3b19;
+  border-color: #dddcd7;
+}
+
+/* ---------- Visual panel ---------- */
+.pj-visual {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1b2610, #3d5526);
+}
+
+.pj-card--featured .pj-visual {
+  height: 300px;
+  background: linear-gradient(135deg, #2a3b19, #55733a);
+}
+
+.pj-visual__mark {
+  position: absolute;
+  left: 22px;
+  bottom: 12px;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 6rem);
+  line-height: 1;
+  color: #dddcd7;
+}
+
+.pj-visual__shape {
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 200px;
+  height: 200px;
+  background: rgba(221, 220, 215, 0.9);
+  transition: transform 0.9s var(--ease-out);
+  animation: shapeFloat 10s ease-in-out infinite;
+}
+
+/* Four shape variants so each card looks different */
+.pj-visual--a .pj-visual__shape {
+  border-radius: 50%;
+}
+
+.pj-visual--b .pj-visual__shape {
+  right: auto;
+  left: 40%;
+  top: -60px;
+  width: 0;
+  height: 0;
+  background: none;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-bottom: 240px solid rgba(221, 220, 215, 0.85);
+  animation-duration: 12s;
+}
+
+.pj-visual--c .pj-visual__shape {
+  border-radius: 28px;
+  transform: rotate(12deg);
+  width: 170px;
+  height: 170px;
+}
+
+.pj-visual--d .pj-visual__shape {
+  border-radius: 200px 200px 0 0;
+  width: 160px;
+  height: 230px;
+  right: 30px;
+  top: auto;
+  bottom: -40px;
+}
+
+.pj-card:hover .pj-visual__shape {
+  transform: translate(-16px, 16px) scale(1.08);
+}
+
+.pj-card--featured .pj-visual__mark {
+  font-size: clamp(5rem, 11vw, 8rem);
+}
+
+/* ---------- Card body ---------- */
+.pj-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: clamp(24px, 3vw, 34px);
+}
+
+.pj-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pj-chip {
+  padding: 7px 14px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.pj-card__num {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  line-height: 1;
+  opacity: 0.4;
+}
+
+.pj-card__title {
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.6vw, 2.8rem);
+  line-height: 0.98;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.pj-card__client {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.pj-card__summary {
+  margin-top: 16px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  opacity: 0.85;
+}
+
+/* Expandable details: animates the row height from 0 to auto */
+.pj-card__more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s var(--ease-out);
+}
+
+.pj-card__more-inner {
+  overflow: hidden;
+}
+
+.pj-card.is-open .pj-card__more {
+  grid-template-rows: 1fr;
+}
+
+.pj-card__label {
+  margin-top: 22px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.pj-card__list {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.pj-card__list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.pj-card__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 9px;
+  height: 2px;
+  background: currentColor;
+}
+
+.pj-card__tags {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pj-card__tags li {
+  padding: 6px 12px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.pj-card__toggle {
+  margin-top: auto;
+  padding-top: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  padding-bottom: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pj-card__toggle::after {
+  content: '';
+  width: 36px;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.4s var(--ease-out);
+}
+
+.pj-card__toggle:hover::after {
+  width: 64px;
+}
+
+.pj-card__toggle span {
+  display: inline-block;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.pj-card.is-open .pj-card__toggle span {
+  transform: rotate(90deg);
+}
+
+/* ---------- CTA ---------- */
+.pj-cta {
+  padding-bottom: clamp(64px, 9vw, 110px);
+}
+
+.pj-cta__inner {
+  text-align: center;
+  padding: clamp(44px, 7vw, 84px) 24px;
+  background: linear-gradient(120deg, #1b2610, #3d5526, #1b2610);
+  background-size: 200% 200%;
+  animation: gradientShift 9s ease infinite;
+  border: 1px solid rgba(221, 220, 215, 0.14);
+}
+
+.pj-cta__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6.5vw, 4.8rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #dddcd7;
+}
+
+.pj-cta__inner .section__text {
+  margin: 18px auto 30px;
+  max-width: 520px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .pj-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pj-card--featured {
+    grid-column: span 1;
+  }
+}
+/* The featured card spans two columns on wide screens */
+.pj-slot[data-featured='true'] {
+  grid-column: span 2;
+}
+
+@media (max-width: 860px) {
+  .pj-slot[data-featured='true'] {
+    grid-column: span 1;
+  }
+}

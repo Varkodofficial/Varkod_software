@@ -1,3 +1,4 @@
+
 import { useRef } from 'react'
 
 const tools = [
@@ -10,20 +11,35 @@ const tools = [
   { cmd: 'removeFormat', label: 'Clear', title: 'Clear formatting' },
 ]
 
-export default function RichTextEditor({ onChange, placeholder, invalid, id }) {
+export default function RichTextEditor({
+  onChange,
+  placeholder,
+  invalid,
+  id,
+}) {
   const areaRef = useRef(null)
 
   const runCommand = (cmd) => {
     const area = areaRef.current
+
     if (!area) return
+
     area.focus()
 
     if (cmd === 'createLink') {
-      const url = window.prompt('Enter the link address (starting with https://)')
+      const url = window.prompt(
+        'Enter the link address (starting with https://)',
+      )
+
       if (!url) return
+
       const clean = url.trim()
+
       if (/^(https?:\/\/|mailto:)/i.test(clean)) {
         document.execCommand('createLink', false, clean)
+      } else {
+        window.alert('Please enter a valid HTTPS, HTTP, or email link.')
+        return
       }
     } else {
       document.execCommand(cmd, false, null)
@@ -34,7 +50,11 @@ export default function RichTextEditor({ onChange, placeholder, invalid, id }) {
 
   return (
     <div className={`rte${invalid ? ' is-invalid' : ''}`}>
-      <div className="rte__toolbar" role="toolbar" aria-label="Text formatting">
+      <div
+        className="rte__toolbar"
+        role="toolbar"
+        aria-label="Text formatting"
+      >
         {tools.map((tool) => (
           <button
             key={tool.cmd}
@@ -59,6 +79,10 @@ export default function RichTextEditor({ onChange, placeholder, invalid, id }) {
         suppressContentEditableWarning
         role="textbox"
         aria-multiline="true"
+        aria-label="Project description"
+        aria-required="true"
+        aria-invalid={Boolean(invalid)}
+        aria-placeholder={placeholder}
         data-placeholder={placeholder}
         onInput={(e) => onChange(e.currentTarget.innerHTML)}
       />

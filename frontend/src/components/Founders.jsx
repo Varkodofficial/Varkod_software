@@ -1,15 +1,19 @@
+
 import { founders } from '../config.js'
 
 export default function Founders() {
   return (
-    <section className="founders" id="team">
+    <section className="founders" id="team" aria-labelledby="founders-title">
       <div className="container">
         <div className="founders__panel">
           <header className="founders__head" data-reveal>
             <div>
               <p className="founders__eyebrow">Founding team</p>
-              <h2 className="founders__title">Meet the founders</h2>
+              <h2 className="founders__title" id="founders-title">
+                Meet the founders
+              </h2>
             </div>
+
             <p className="founders__text">
               Four founders, one bond, one vision. Every project is led by the people
               who will also be there after launch.
@@ -27,10 +31,11 @@ export default function Founders() {
                 <div className="founder__frame">
                   <img
                     src={founder.photo}
-                    alt={founder.name}
+                    alt={`${founder.name} - ${founder.role} at VARKOD Software Solutions`}
                     width="800"
                     height="1000"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
 

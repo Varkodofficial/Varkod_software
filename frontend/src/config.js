@@ -3,6 +3,9 @@ export const CONTACT_EMAIL = 'varkod.official@gmail.com'
 
 export const PHONE_NUMBER = '+91 7305058709'
 
+export const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000'
+
 export const founders = [
   {
     name: 'Kavin Sundar A M',
@@ -37,4 +40,3 @@ export const founders = [
     photo: '/assets/images/team/founder44.png',
   },
 ]
-

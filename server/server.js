@@ -193,15 +193,18 @@ app.use((err, req, res, next) => {
 })
 
 // Start backend
-app.listen(PORT, '127.0.0.1', () => {
-  console.log(`VARKOD backend running at http://127.0.0.1:${PORT}`)
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`VARKOD backend running on port ${PORT}`)
 
-  // Check SMTP connection without sending an email
+  // Verify Resend configuration
   verifyEmailConnection()
     .then(() => {
-      console.log('SMTP connection verified successfully.')
+      console.log('Resend configuration verified successfully.')
     })
     .catch((error) => {
-      console.error('SMTP connection verification failed:', error.message)
+      console.error(
+        'Resend configuration verification failed:',
+        error.message
+      )
     })
 })

@@ -1,7 +1,10 @@
-
 import { useState } from 'react'
+import {
+  CONTACT_EMAIL,
+  PHONE_NUMBER,
+  API_BASE_URL,
+} from '../config.js'
 
-import { CONTACT_EMAIL, PHONE_NUMBER } from '../config.js'
 
 import RichTextEditor from './RichTextEditor.jsx'
 
@@ -121,8 +124,7 @@ export default function Contact() {
     ].join('\n')
 
     try {
-      const response = await fetch(
-        'http://127.0.0.1:5000/api/contact',
+      const response = await fetch(`${API_BASE_URL}/api/contact`,
         {
           method: 'POST',
           headers: {

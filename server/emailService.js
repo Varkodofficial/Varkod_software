@@ -1,77 +1,35 @@
 
-const nodemailer = require('nodemailer')
+const { Resend } = require('resend')
 
-// Required environment variables
+// Validate required environment variables
 const requiredEnv = [
-  'SMTP_HOST',
-  'SMTP_PORT',
-  'SMTP_USER',
-  'SMTP_PASS',
-  'CONTACT_EMAIL',
+  'RESEND_API_KEY',
+  'RESEND_TEST_TO',
 ]
 
-// Validate environment configuration
 for (const key of requiredEnv) {
   const value = process.env[key]
 
-  if (
-    !value ||
-    !value.trim() ||
-    value === 'YOUR_GMAIL_APP_PASSWORD'
-  ) {
+  if (!value || !value.trim()) {
     throw new Error(`Missing or invalid environment variable: ${key}`)
   }
 }
 
-// Validate SMTP port
-const port = Number(process.env.SMTP_PORT)
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY)
 
-if (!Number.isInteger(port) || port < 1 || port > 65535) {
-  throw new Error('Invalid SMTP_PORT configuration.')
-}
-
-// Validate SMTP security setting
-if (!['true', 'false'].includes(process.env.SMTP_SECURE)) {
-  throw new Error('Invalid SMTP_SECURE configuration.')
-}
-
-// Validate Gmail SMTP configuration
-if (
-  process.env.SMTP_HOST === 'smtp.gmail.com' &&
-  (port !== 465 || process.env.SMTP_SECURE !== 'true')
-) {
-  throw new Error('Invalid Gmail SMTP security configuration.')
-}
-
-// Create secure SMTP transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port,
-  secure: process.env.SMTP_SECURE === 'true',
-
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-
-  tls: {
-    rejectUnauthorized: true,
-  },
-
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 20000,
-})
+// Testing sender (no custom domain required)
+const FROM_EMAIL =
+  process.env.RESEND_FROM_EMAIL ||
+  'VARKOD Website <onboarding@resend.dev>'
 
 // Send contact enquiry
 async function sendContactEmail({ name, email, subject, message }) {
-  return transporter.sendMail({
-    from: {
-      name: 'VARKOD Website',
-      address: process.env.SMTP_USER,
-    },
+  const { data, error } = await resend.emails.send({
+    from: FROM_EMAIL,
 
-    to: process.env.CONTACT_EMAIL,
+    // During testing, this must be your Resend account email
+    to: [process.env.RESEND_TEST_TO],
 
     replyTo: email,
 
@@ -88,11 +46,28 @@ async function sendContactEmail({ name, email, subject, message }) {
       message,
     ].join('\n'),
   })
+
+  if (error) {
+    console.error('Resend email error:', error.message)
+    throw new Error('Unable to send contact email.')
+  }
+
+  console.log('Contact email sent successfully:', data.id)
+
+  return data
 }
 
-// Verify SMTP connection
+// Validate Resend configuration
 async function verifyEmailConnection() {
-  return transporter.verify()
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error('RESEND_API_KEY is missing.')
+  }
+
+  if (!process.env.RESEND_TEST_TO) {
+    throw new Error('RESEND_TEST_TO is missing.')
+  }
+
+  return true
 }
 
 module.exports = {

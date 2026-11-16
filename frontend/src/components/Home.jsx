@@ -1,3 +1,4 @@
+
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { CONTACT_EMAIL } from '../config.js'
@@ -113,9 +114,14 @@ export default function Home() {
   const handlePointerMove = (e) => {
     const el = visualRef.current
     if (!el) return
+
     const rect = el.getBoundingClientRect()
+
+    if (!rect.width || !rect.height) return
+
     const x = (e.clientX - rect.left) / rect.width - 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5
+
     el.style.setProperty('--ry', `${(x * 14).toFixed(2)}deg`)
     el.style.setProperty('--rx', `${(-y * 12).toFixed(2)}deg`)
   }
@@ -123,6 +129,7 @@ export default function Home() {
   const handlePointerLeave = () => {
     const el = visualRef.current
     if (!el) return
+
     el.style.setProperty('--rx', '0deg')
     el.style.setProperty('--ry', '0deg')
   }
@@ -133,7 +140,9 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="container hero__grid">
           <div className="hero__copy">
-            <p className="eyebrow hero__eyebrow">VARKOD Software Solution</p>
+            <p className="eyebrow hero__eyebrow">
+              VARKOD Software Solution
+            </p>
 
             <h1 className="hero__title">
               <span className="line">
@@ -159,6 +168,7 @@ export default function Home() {
               <a href={`mailto:${CONTACT_EMAIL}`} className="btn btn--solid">
                 Start your project <span className="btn__arrow">→</span>
               </a>
+
               <Link to="/projects" className="btn btn--ghost">
                 View our work
               </Link>
@@ -186,6 +196,9 @@ export default function Home() {
                 alt="VARKOD logo"
                 width="602"
                 height="396"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
               />
             </div>
 
@@ -198,12 +211,21 @@ export default function Home() {
                   />
                 </defs>
                 <text>
-                  <textPath href="#badge-circle" textLength="486" lengthAdjust="spacing">
+                  <textPath
+                    href="#badge-circle"
+                    textLength="486"
+                    lengthAdjust="spacing"
+                  >
                     VARKOD SOFTWARE SOLUTION • ONE BOND ONE VISION •
                   </textPath>
                 </text>
               </svg>
-              <svg className="hero__badge-arrow" viewBox="0 0 24 24" fill="none">
+
+              <svg
+                className="hero__badge-arrow"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
                 <path
                   d="M7 17L17 7M9 7h8v8"
                   stroke="currentColor"
@@ -221,7 +243,7 @@ export default function Home() {
       <div className="marquee" aria-hidden="true">
         <div className="marquee__track">
           {[...marqueeItems, ...marqueeItems].map((item, i) => (
-            <span key={i}>
+            <span key={`${item}-${i}`}>
               {item}
               <i className="marquee__dot" />
             </span>
@@ -292,7 +314,9 @@ export default function Home() {
                 style={{ '--d': `${i * 140}ms` }}
                 onPointerMove={spotlightMove}
               >
-                <span className="pillar-card__num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="pillar-card__num">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
                 <h3 className="pillar-card__title">{pillar.title}</h3>
                 <p className="pillar-card__text">{pillar.text}</p>
                 <span className="pillar-card__bar" aria-hidden="true" />
@@ -317,12 +341,17 @@ export default function Home() {
                 from our desk.
               </h2>
             </div>
+
             <Link to="/projects" className="showcase__all">
               View all case studies <span>→</span>
             </Link>
           </header>
 
-          <div className="showcase__track" role="list" aria-label="Case studies">
+          <div
+            className="showcase__track"
+            role="list"
+            aria-label="Case studies"
+          >
             {showcase.map((project, i) => (
               <article
                 key={project.title}
@@ -357,15 +386,18 @@ export default function Home() {
       <section className="cta" id="contact">
         <div className="container cta__inner" data-reveal>
           <p className="eyebrow">Let&apos;s build together</p>
+
           <h2 className="cta__title">
             Ready to build
             <br />
             something that lasts?
           </h2>
+
           <p className="section__text">
             Share your idea with us. We will come back with a clear plan, a realistic
             timeline and honest next steps.
           </p>
+
           <div className="cta__actions">
             <a href={`mailto:${CONTACT_EMAIL}`} className="btn btn--solid">
               Start the conversation <span className="btn__arrow">→</span>

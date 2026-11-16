@@ -182,6 +182,7 @@ export default function About() {
                       width="800"
                       height="900"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
 

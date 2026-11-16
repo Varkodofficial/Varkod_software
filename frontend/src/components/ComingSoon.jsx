@@ -1,9 +1,17 @@
+
 import { Link, useLocation } from 'react-router-dom'
 
 // Temporary page for routes we have not designed yet
 export default function ComingSoon() {
   const { pathname } = useLocation()
-  const pageName = pathname.replace(/\//g, '') || 'Page'
+
+  const pageName =
+    pathname
+      .split('/')
+      .filter(Boolean)
+      .pop()
+      ?.replace(/[-_]+/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase()) || 'Page'
 
   return (
     <main className="coming-soon">
